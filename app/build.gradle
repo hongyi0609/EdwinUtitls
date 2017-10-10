@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'maven'
 
+uploadArchives {
+    repositories.mavenDeployer {
+        println(localUrl + "--" + groupID + "--" + artifactId + "--" + mavenVersion)
+        repository(url: localUrl)
+        pom.groupId = groupID
+        pom.artifactId = artifactId
+        pom.version = mavenVersion
+    }
+}
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
