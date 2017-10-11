@@ -1,2 +1,6 @@
 ##Cookie 和Session的概念
-简单来说，cookie就是客户端的会话id，而session就是服务器端的会话id，根据这个id号可以查询到你的会话内容。
+
+简单来说，cookie就是客户端的会话id，而session就是服务器端的会话id，根据这个id号可以查询到你的会话内容。这样就使得无状态的HTTP保持连接状态，
+而不必重复登录。换句话说，cookie和session是一种用于保持HTTP连接状态的技术
+
+
