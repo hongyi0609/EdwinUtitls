@@ -1,0 +1,2 @@
+##Cookie 和Session的概念
+简单来说，cookie就是客户端的会话id，而session就是服务器端的会话id，根据这个id号可以查询到你的会话内容。
