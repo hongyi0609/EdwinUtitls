@@ -1,6 +1,144 @@
 ##Cookie 和Session的概念
 
 简单来说，cookie就是客户端的会话id，而session就是服务器端的会话id，根据这个id号可以查询到你的会话内容。这样就使得无状态的HTTP保持连接状态，
-而不必重复登录。换句话说，cookie和session是一种用于保持HTTP连接状态的技术
+而不必重复登录。换句话说，cookie和session是两种用于保持HTTP连接状态的技术
+
+[链接]（http://www.jianshu.com/p/53e8e0eb36b8）
+public class MainActivity extends Activity  {
+    private EditText et_username,et_code,et_identy;
+    private Button btn_login,btn_changeImg;
+    private ImageView img_identy;
+    private Context context;
+
+    private OkHttpClient okHttpClient;
+    public String s ;
+    private static final int SUCCESS = 1;
+    private static final int FALL = 2;
+
+    public Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                //加载网络成功进行UI的更新,处理得到的图片资源
+                case SUCCESS:
+                    //通过message，拿到字节数组
+                    byte[] Picture = (byte[]) msg.obj;
+                    //使用BitmapFactory工厂，把字节数组转化为bitmap
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
+                    //通过imageview，设置图片
+                    img_identy.setImageBitmap(bitmap);
+
+                    break;
+                //当加载网络失败执行的逻辑代码
+                case FALL:
+                    Toast.makeText(MainActivity.this, "网络出现了问题", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        init();
+        context = getApplicationContext();
+        ChangeImage();
 
 
+        btn_changeImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangeImage();
+            }
+        });
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginServer();
+            }
+        });
+    }
+
+    private void LoginServer() {
+        Log.i("info_Login","知道了session："+s);
+        OkHttpClient client = new OkHttpClient();
+        FormBody body = new FormBody.Builder()
+                .add("userName",et_username.getText().toString())
+                .add("password",et_code.getText().toString())
+                .add("randCode",et_identy.getText().toString())
+                .add("langCode","zh-cn")
+                .build();
+        Request request = new Request.Builder()
+                .addHeader("cookie",s)
+                .url(App.url_login)
+                .post(body)
+                .build();
+        Call call2 = okHttpClient.newCall(request);
+        call2.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i("info_call2fail",e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    Log.i("info_call2success",response.body().string());
+                }
+                Headers headers = response.headers();
+                Log.i("info_respons.headers",headers+"");
+
+            }
+        });
+    }
+
+    private void ChangeImage() {
+        Request request = new Request.Builder()
+                .url(App.url_randCodeImage)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i("info_callFailure",e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                byte[] byte_image =  response.body().bytes();
+
+
+                //通过handler更新UI
+                Message message = handler.obtainMessage();
+                message.obj = byte_image;
+                message.what = SUCCESS;
+                Log.i("info_handler","handler");
+                handler.sendMessage(message);
+
+                //session
+                Headers headers = response.headers();
+                Log.d("info_headers", "header " + headers);
+                List<String> cookies = headers.values("Set-Cookie");
+                String session = cookies.get(0);
+                Log.d("info_cookies", "onResponse-size: " + cookies);
+
+                s = session.substring(0, session.indexOf(";"));
+                Log.i("info_s", "session is  :" + s);
+
+            }
+        });
+    }
+
+    private void init() {
+        et_username = (EditText) findViewById(R.id.et_username);
+        et_code = (EditText) findViewById(R.id.et_code);
+        et_identy = (EditText) findViewById(R.id.et_identy);
+        btn_login = (Button) findViewById(R.id.btn_login);
+        img_identy = (ImageView) findViewById(R.id.img_identy);
+        btn_changeImg = (Button) findViewById(R.id.btn_changeImg);
+        okHttpClient = new OkHttpClient();
+    }
+
+}
