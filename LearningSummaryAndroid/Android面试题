@@ -41,7 +41,8 @@
 ### 8. 如何保证线程安全？
     8.1 避免在主线程执行耗时操作：文件读写、网络访问等，这些操作应该在子线程完成
     8.2 避免在子线程访问UI，可以使用handler.post()等做线程切换
-    8.3 多线程竞争时，对共享资源使用synchronized、ReentrantLock(可重入锁，可以有效避免死锁问题，Java1.5推出)保护，使用Volatile保证虚拟机赋值不重新排序
+    8.3 多线程竞争时，对共享资源使用synchronized、ReentrantLock(可重入锁，可以有效避免死锁问题，Java1.5推出)保护，使用Volatile保证虚拟机赋值不
+    重新排序
     8.4 使用Android提供的Sync*类做同步操作
 ### 9. java四中引用
     强引用：只要某个对象有强引用与之关联，JVM必定不会回收这个对象，即使在内存不足的情况下，JVM宁愿抛出OutOfMemory错误也不会回收这种对象。
@@ -94,6 +95,22 @@
     LRUCache内部维护主要是通过LinkedHashMap实现。它是一个继承自HashMap的双向链表主要就是 将 LinkedHashMap的accessOrder设置为true来实现LRU，
  利用访问顺序而不是插入顺序。把HashMap中保存的Entry重写为双向链表的节点元素，维护链表来保证访问顺序。
  [LinkedHashMap与LruCache的源码分析](http://mp.weixin.qq.com/s/Dp1-qPrJnk1pYJnDsbdLCg)
+ 
+ [DiskLruCache使用](https://yq.aliyun.com/articles/63710)
+ 
  ### 2. SparseArray原理
+     SparseArray是Android推出的采用二分法查找的数据结构，在低于1000的数量级时，查找速度快
+     SparseArray不需要对key和value进行auto-boxing（将原始类型封装为对象类型，比如把int类型封装成Integer类型），结构比HashMap简单（SparseArray
+ 内部主要使用两个一维数组来保存数据，一个用来存key，一个用来存value）不需要额外的额外的数据结构（主要是针对HashMap中的HashMapEntry而言的）。
  [SparseArray原理](http://blog.csdn.net/hlglinglong/article/details/45462773)
-    
+ ### 3. 开启线程的三种方式,run()和start()方法区别
+     区别：调用start方法可启动线程，而run方法只是thread的一个普通方法调用，还是在主线程里执行。
+     开启线程的方式：
+     3.1 继承Thread 
+     3.2 实现Runnable.run()接口，还能通过handler.remove()掉 
+     3.3 通过Callable.call()和FutureTask(可以预测线程状态，有返回值)创建线程
+     [java创建线程的三种方式及其对比](http://blog.csdn.net/longshengguoji/article/details/41126119)
+ ### 4. 判断环（猜测应该是链表环）
+     通过两个指针p1,p2都指向开头的位置，然后通过while循环让指针往前移动，p1每次移动一个step，p2每次移动两个step,如果有环，p2在比p1多移动一个环的时
+     候，正好遇上p1。这时候有p1.equals(p2)
+ ### 5. 
