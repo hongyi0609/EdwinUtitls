@@ -89,8 +89,11 @@
  This class is thread-safe. Perform multiple cache operations atomically by synchronizing on the cache
     该类是线程安全的，通过synchronized(cache)实现多线程缓存操作。
     此外，该类需要重写sizeof()方法，默认根据添加缓存数计算。通常分配当前APP可用内存的1/8
+    （int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024)/8;  ）
     这就是LRU（Least Recently Used，最近最少使用）的原理。
- LRUCache内部维护主要是通过LinkedHashMap实现。它是一个继承自HashMap的双向链表主要就是 将 LinkedHashMap 的 accessOrder 设置为 true 来实现 LRU，
- 利用访问顺序而不是插入顺序。
- 
+    LRUCache内部维护主要是通过LinkedHashMap实现。它是一个继承自HashMap的双向链表主要就是 将 LinkedHashMap的accessOrder设置为true来实现LRU，
+ 利用访问顺序而不是插入顺序。把HashMap中保存的Entry重写为双向链表的节点元素，维护链表来保证访问顺序。
+ [LinkedHashMap与LruCache的源码分析](http://mp.weixin.qq.com/s/Dp1-qPrJnk1pYJnDsbdLCg)
+ ### 2. SparseArray原理
+ [SparseArray原理](http://blog.csdn.net/hlglinglong/article/details/45462773)
     
