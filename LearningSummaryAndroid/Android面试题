@@ -41,7 +41,7 @@
 ### 8. 如何保证线程安全？
     8.1 避免在主线程执行耗时操作：文件读写、网络访问等，这些操作应该在子线程完成
     8.2 避免在子线程访问UI，可以使用handler.post()等做线程切换
-    8.3 多线程竞争时，对共享资源使用synchronized、ReentrantLock保护，使用Volatile保证虚拟机赋值不重新排序
+    8.3 多线程竞争时，对共享资源使用synchronized、ReentrantLock(可重入锁，可以有效避免死锁问题，Java1.5推出)保护，使用Volatile保证虚拟机赋值不重新排序
     8.4 使用Android提供的Sync*类做同步操作
 ### 9. java四中引用
     强引用：只要某个对象有强引用与之关联，JVM必定不会回收这个对象，即使在内存不足的情况下，JVM宁愿抛出OutOfMemory错误也不会回收这种对象。
@@ -73,4 +73,24 @@
     法来提高Glide的内存缓存大小，从而加快图片的加载速度。在有些情况下我们不希望做内存缓存（比如加载GIF图片），这个时候可以调用
     skipMemoryCache(true)方法跳过内存缓存。
     
+ ## 阿里巴巴面试题
+ ### 1.LRUCache原理
+ Android官方是这么说的：
+ A cache that holds strong references to a limited number of values. Each time a value is accessed, it is moved to the head of a queue. 
+ When a value is added to a full cache, the value at the end of that queue is evicted and may become eligible for garbage collection.
+    该缓存对指定数量的缓存值持有强引用（OOM都回收不了的资源），每次某个值被访问，就会被移动到“队列”的开头。当缓存队列满的时候，如果再往队列里添加缓
+ 存值的话，队列尾部的缓存值出列，而且GC可以随时回收它。
+ If your cached values hold resources that need to be explicitly released, override {@link #entryRemoved}.
+    如果缓存值持有需要被显式释放的资源，你需要覆写{@link #entryRemoved}方法。比如Android2.3以前的Bitmap，如果不调用其recycle方法，资源就不能释放，
+ GC无法回收造成内存泄漏。覆写entryRemoved()可以通过设置flag或者判断版本等方式来是当前资源可回收
+ If a cache miss should be computed on demand for the corresponding keys, override {@link #create}. This simplifies the calling code, 
+ allowing it to assume a value will always be returned, even when there's a cache miss.
+    如果根据对应键需求应该被计算的某个缓存值丢失，可以覆写create()方法，这样可以简化调用代码，允许假设一个返回值
+ This class is thread-safe. Perform multiple cache operations atomically by synchronizing on the cache
+    该类是线程安全的，通过synchronized(cache)实现多线程缓存操作。
+    此外，该类需要重写sizeof()方法，默认根据添加缓存数计算。通常分配当前APP可用内存的1/8
+    这就是LRU（Least Recently Used，最近最少使用）的原理。
+ LRUCache内部维护主要是通过LinkedHashMap实现。它是一个继承自HashMap的双向链表主要就是 将 LinkedHashMap 的 accessOrder 设置为 true 来实现 LRU，
+ 利用访问顺序而不是插入顺序。
+ 
     
