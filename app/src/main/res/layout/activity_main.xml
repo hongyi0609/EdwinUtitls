@@ -14,7 +14,8 @@
         app:borderColor="@color/colorAccent"
         app:imageBorderWidth="2dp"
         app:onlyDrawBorder="false"
-        app:type="circle" />
+        app:type="circle"
+        android:layout_alignLeft="@+id/customShapeImageView" />
 
     <com.edwin.utils.shapeimageview.CustomShapeImageView
         android:layout_width="100dp"
