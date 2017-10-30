@@ -136,8 +136,11 @@
      3.2 权限组 同一组内的获取一个权限即可拥有全组权限。比如读写存储器组，主要用于危险权限
      [动态权限](http://www.jianshu.com/p/a37f4827079a)
  ### 4. 网络请求缓存处理，okhttp如何处理网络缓存的
- 
+     
  ### 5. 图片加载库相关，bitmap如何处理大图，如一张30M的大图，如何预防OOM
+     5.1 通过Bitmap.Options.inJustDecodeBounds = true，读取图片的大小信息，通过更改Bitmap.Options.inSampleSize来减小图片大小
+     5.2 通过LRUCache对图片进行缓存，以节省内存
+     链接：[郭霖#高效加载大图](http://blog.csdn.net/guolin_blog/article/details/9316683)
  ### 6. 进程保活
  ### 7. listview图片加载错乱的原理和解决方案
  ### 8. https相关，如何验证证书的合法性，https中哪里用了对称加密，哪里用了非对称加密，对加密算法（如RSA）等是否有了解
