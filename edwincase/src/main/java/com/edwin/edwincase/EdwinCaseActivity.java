@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EdwinCaseActivity extends AppCompatActivity {
+public class EdwinCaseActivity extends EdwinBaseActivity {
 
     private static final String TAG = EdwinCaseActivity.class.getSimpleName();
     private FundCurveView mFundCurveView;
@@ -23,23 +23,22 @@ public class EdwinCaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edwin_case);
-        initView();
-        initData();
-        loadData();
-
+        super.onCreate(savedInstanceState);
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         mFundCurveView = findViewById(R.id.fund_view);
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         mHandler = new FundHandler();
     }
 
-    private void loadData() {
+    @Override
+    protected void loadData() {
         mHandler.postDelayed(mRunnable, 1000);
     }
 
