@@ -11,11 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 public abstract class EdwinBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setContentView();
         super.onCreate(savedInstanceState);
         initView();
         initData();
         loadData();
     }
+
+    protected abstract void setContentView();
 
     protected void initView() {
 

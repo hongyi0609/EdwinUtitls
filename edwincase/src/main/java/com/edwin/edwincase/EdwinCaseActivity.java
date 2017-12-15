@@ -23,8 +23,12 @@ public class EdwinCaseActivity extends EdwinBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_edwin_case);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void setContentView() {
+        setContentView(R.layout.activity_edwin_case);
     }
 
     @Override
