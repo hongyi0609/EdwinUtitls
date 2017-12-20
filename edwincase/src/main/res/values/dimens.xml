@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="comments_post_top_padding">100dp</dimen>
+    <dimen name="comments_post_left_padding">15dp</dimen>
+    <dimen name="comments_post_right_padding">15dp</dimen>
+    <dimen name="comments_post_delete">40dp</dimen>
+    <dimen name="article_img_margin_top">10dp</dimen>
+
+    <dimen name="item_comments_top_padding">2dp</dimen>
+    <dimen name="item_comments_bottom_padding">2dp</dimen>
+
+    <dimen name="moment_img_width">70dp</dimen>
+    <dimen name="moment_img_height">70dp</dimen>
+    <dimen name="moment_img_grid_size">150dp</dimen>
+</resources>

@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by hongy_000 on 2017/12/15.
+ * Created by Edwin on 2017/12/15.
+ * @author Edwin
  */
 
 public abstract class EdwinBaseActivity extends AppCompatActivity {
+    protected final String TAG = this.getClass().getSimpleName();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView();

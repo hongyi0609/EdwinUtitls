@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">EdwinCase</string>
+    <string name="fund_view_case">金融趋势波动图</string>
+    <string name="glide_plus_icon_string">android.resource://</string>
+
+    <string name="post_delete_tips">拖动到此处，进行删除</string>
+    <string name="post_delete_tv_s"> 放开手指，进行删除</string>
+    <string name="obtain_photos">Obtain Photos</string>
+    <string name="drag_img">Drag And Swipe Images</string>
 </resources>

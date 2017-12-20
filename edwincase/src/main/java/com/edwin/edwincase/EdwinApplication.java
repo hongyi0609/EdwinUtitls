@@ -4,16 +4,22 @@ import android.app.Application;
 import android.content.Context;
 
 /**
- * Created by hongy_000 on 2017/12/17.
+ * Created by Edwin on 2017/12/17.
  */
 
 public class EdwinApplication extends Application {
 
     private static Context mContext;
+    private static Application sApplication;
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        sApplication = new EdwinApplication();
+    }
+
+    public static Application getInstance() {
+        return sApplication;
     }
 
     public static Context getContext() {

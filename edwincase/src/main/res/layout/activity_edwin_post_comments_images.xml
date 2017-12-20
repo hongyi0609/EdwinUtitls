@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/text_delete_region"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/comments_post_delete"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"
+        android:text="@string/post_delete_tips"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_post_comments"
+        android:paddingTop="@dimen/comments_post_top_padding"
+        android:paddingStart="@dimen/comments_post_left_padding"
+        android:paddingLeft="@dimen/comments_post_left_padding"
+        android:paddingEnd="@dimen/comments_post_right_padding"
+        android:paddingRight="@dimen/comments_post_right_padding"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <EditText
+        android:id="@+id/edit_text_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/moment_img_height"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="分享有趣的事"
+        android:inputType="textMultiLine"
+        android:maxLength="140"
+        android:paddingStart="@dimen/comments_post_left_padding"
+        android:paddingLeft="@dimen/comments_post_left_padding"
+        android:paddingEnd="@dimen/comments_post_right_padding"
+        android:paddingRight="@dimen/comments_post_right_padding"
+        android:paddingTop="10dp"
+        android:textSize="14sp" />
+</RelativeLayout>
